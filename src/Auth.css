@@ -1,0 +1,15 @@
+.dot {
+  border-radius: 50%;
+  height: 1rem;
+  width: 1rem;
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.success {
+  background-color: #0d0;
+}
+
+.fail {
+  background-color: #d00;
+}

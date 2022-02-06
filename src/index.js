@@ -1,17 +1,63 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
+import "./index.css";
+import App from "./App";
+import AlertBox from "./alertBox/AlertBox";
+import {
+  LoginPage,
+  AuthPage,
+  AuthProvider,
+  AuthStatus,
+  RequireAuth,
+} from "./Auth";
+import Chat from "./chat/Chat";
+import Config from "./config/Config";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <AuthProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/" element={<App />} />
+          <Route path="/auth" element={<AuthPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/alertBox"
+            element={
+              <RequireAuth>
+                <AlertBox />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/chat"
+            element={
+              <RequireAuth>
+                <Chat />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/config"
+            element={
+              <RequireAuth>
+                <Config />
+              </RequireAuth>
+            }
+          />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </AuthProvider>,
+  document.getElementById("App")
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+function Layout() {
+  return (
+    <>
+      <AuthStatus />
+      <Outlet />
+    </>
+  );
+}
