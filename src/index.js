@@ -7,15 +7,15 @@ import AlertBox from "./alertBox/AlertBox";
 import {
   LoginPage,
   AuthPage,
-  AuthProvider,
   AuthStatus,
   RequireAuth,
 } from "./Auth";
+import { AuthContextProvider } from "./store/auth-context";
 import Chat from "./chat/Chat";
 import Config from "./config/Config";
 
 ReactDOM.render(
-  <AuthProvider>
+  <AuthContextProvider>
     <BrowserRouter>
       <Routes>
         <Route element={<Layout />}>
@@ -49,7 +49,7 @@ ReactDOM.render(
         </Route>
       </Routes>
     </BrowserRouter>
-  </AuthProvider>,
+  </AuthContextProvider>,
   document.getElementById("App")
 );
 

@@ -1,22 +1,21 @@
 import axios from "axios";
 
-const baseURL = process.env.REACT_APP_URL;
-const client_id = process.env.REACT_APP_CLIENT_ID;
+const apiUrl = process.env.REACT_APP_API_URL;
+const authUrl = process.env.REACT_APP_AUTH_URL;
+const redirectUrl = process.env.REACT_APP_REDIRECT_URI;
+const clientId = process.env.REACT_APP_CLIENT_ID;
 
-const TwitchAPI = axios.create({
-  baseURL: baseURL,
+export const twitchApi = axios.create({
+  baseURL: apiUrl,
   headers: {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, PUT, POST, DELETE, OPTIONS",
     "Content-Type": "application/json",
-    "Client-ID": client_id,
+    "Client-ID": clientId,
   },
 });
 
 export const loginUrl =
-  process.env.REACT_APP_AUTH_URL +
-  "?redirect_uri=" +
-  process.env.REACT_APP_REDIRECT_URI +
-  "&response_type=token&client_id=" +
-  client_id +
-  "&scope=user:read:email";
+  authUrl + "?redirect_uri=" +
+  redirectUrl + "&response_type=token&client_id=" +
+  clientId + "&scope=user:read:email";

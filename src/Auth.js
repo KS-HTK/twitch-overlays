@@ -1,33 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import useAuth from "./store/auth-context";
 import { loginUrl } from "./services/Twitch";
 import "./Auth.css";
-
-let AuthContext = React.createContext();
-
-export function AuthProvider({ children }) {
-  let [authToken, setAuthToken] = useState(null);
-  let [authValid, setAuthValid] = useState(false);
-
-  let refresh = (newAuthToken) => {
-    setAuthToken(newAuthToken);
-    setAuthValid(true);
-  };
-
-  let value = { authToken, authValid, refresh };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-function useAuth() {
-  return React.useContext(AuthContext);
-}
 
 export function AuthStatus() {
   let auth = useAuth();
   let navigate = useNavigate();
 
-  if (!auth.authToken) {
+  if (!auth.token) {
     return (
       <p>
         Login: <span className="dot fail"></span>
@@ -46,7 +27,7 @@ export function RequireAuth({ children }) {
   let auth = useAuth();
   let location = useLocation();
 
-  if (!auth.authToken) {
+  if (!auth.token) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
@@ -67,7 +48,7 @@ export function AuthPage() {
 }
 
 function popup() {
-  return window.open(loginUrl, "newwindow", "width=200,height=800");
+  return window.open(loginUrl, "newwindow", "width=500,height=800");
 }
 
 export function LoginPage() {
@@ -78,13 +59,13 @@ export function LoginPage() {
   let from = location.state?.from?.pathname || "/";
   console.log(from, location, "/login");
 
-  if (auth.authValid) {
+  if (auth.validateToken) {
     navigate(from, { replace: true });
   }
 
   window.setToken = (hash) => {
     if (hash.token_type !== "bearer") return null;
-    auth.refresh(hash.access_token, () => {
+    auth.setToken(hash.access_token, () => {
       navigate(from, { replace: true });
     });
   };
