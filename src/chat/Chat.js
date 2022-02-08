@@ -11,6 +11,7 @@ export default function Chat(props) {
   const { globalBadges, channelBadges, setGlobalBadges, setChannelBadges, badgeResetKey } = useBadges();
   const { globalEmotes, channelEmotes, setGlobalEmotes, setChannelEmotes, emoteResetKey } = useEmotes();
   const [broadcaster, setBroadcaster] = useState(undefined);
+  const [messages, setMessages] = useState([]);
   const setInfo = (obj) => {
     setBroadcaster(obj[0]);
   }

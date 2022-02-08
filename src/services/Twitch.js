@@ -1,25 +1,25 @@
-import axios from "axios";
-
 const apiUrl = process.env.REACT_APP_API_URL;
 const authUrl = process.env.REACT_APP_AUTH_URL;
 const redirectUrl = process.env.REACT_APP_REDIRECT_URI;
 const clientId = process.env.REACT_APP_CLIENT_ID;
 
+const scope = "chat:read";
+
 export const loginUrl =
-  authUrl + "?redirect_uri=" +
-  redirectUrl + "&response_type=token&client_id=" +
-  clientId + "&scope=user:read:email";
+  authUrl +
+  "?redirect_uri=" +
+  redirectUrl +
+  "&response_type=token&client_id=" +
+  clientId +
+  "&scope=" +
+  scope;
 
-
-export function ApiRequest(token, endpoint, callback = (res)=>{}, params = null) {
-  const twitchApi = axios.create({
-    baseURL: apiUrl,
-    headers: {
-      "Authorization": "Bearer "+token,
-      "Client-ID": clientId,
-    },
-  });
-  
+export function ApiRequest(
+  token,
+  endpoint,
+  callback = (res) => {},
+  params = null
+) {
   let paramStr = "";
   if (params !== null) {
     for (const [key, val] of Object.entries(params)) {
@@ -27,6 +27,30 @@ export function ApiRequest(token, endpoint, callback = (res)=>{}, params = null)
     }
     paramStr = paramStr.replace("&", "?");
   }
-  twitchApi.get(endpoint+paramStr).then((res) => {callback(res.data.data)},(reason) => {console.warn("API request to "+endpoint+"failed:\n"+reason)})
+  let headers = new Headers();
+  headers.append("Authorization", "Bearer " + token);
+  headers.append("Client-ID", clientId);
+
+  const req = new Request(apiUrl + "/" + endpoint + paramStr, { headers });
+
+  fetch(req).then(
+    (res) => {
+      if (res.ok) {
+        res.json().then((data) => {
+          callback(data.data);
+        });
+      } else {
+        console.warn(
+          "API request to " +
+            endpoint +
+            " generated unsuccessful response." +
+            res.body
+        );
+      }
+    },
+    (reason) => {
+      console.warn("API request to " + endpoint + " failed:\n" + reason);
+    }
+  );
   return null;
 }
