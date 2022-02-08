@@ -6,7 +6,6 @@ import "./Auth.css";
 
 export function AuthStatus() {
   let auth = useAuth();
-  let navigate = useNavigate();
 
   if (!auth.token) {
     return (
@@ -42,7 +41,17 @@ export function AuthPage() {
     .split("&")
     .map((v) => v.split("="))
     .reduce((pre, [key, value]) => ({ ...pre, [key]: value }), {});
-  window.opener.setToken(hash);
+  try {
+    if(window.opener != null && !window.opener.closed) {
+      window.opener.setToken(hash); 
+      //FIXME: window.opener is set to about:blank#blocked in chromium
+      //       why? How the hell should I know, but it invalidates any call (even postMessage)
+    }
+  } catch(e){
+    console.log(window.opener, window)
+    console.error(e.description);
+    return <p>The Authentication token could not be passed back to the application!</p>;
+  }
   window.close();
   return <p>Authentication was successfull, you may close this window.</p>;
 }
@@ -57,7 +66,6 @@ export function LoginPage() {
   let auth = useAuth();
 
   let from = location.state?.from?.pathname || "/";
-  console.log(from, location, "/login");
 
   if (auth.validateToken) {
     navigate(from, { replace: true });

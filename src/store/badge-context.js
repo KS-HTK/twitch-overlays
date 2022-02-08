@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -12,19 +12,21 @@ function reducer(state, action) {
 
 function rebuild(state) {
   return {
-    resetKey: state.resetKey,
-    global: state.global,
-    channel: state.channel,
+    badgeResetKey: state.badgeResetKey,
+    globalBadges: state.globalBadges,
+    channelBadges: state.channelBadges,
+    setGlobalBadges: state.setGlobalBadges,
+    setChannelBadges: state.setChannelBadges,
   };
 }
 
-function init(resetKey) {
+function init(badgeResetKey) {
   return {
-    resetKey,
-    global: undefined,
-    channel: undefined,
-    setGlobal: (newObj) => {},
-    setChannel: (newObj) => {},
+    badgeResetKey,
+    globalBadges: undefined,
+    channelBadges: undefined,
+    setGlobalBadges: (newObj) => {},
+    setChannelBadges: (newObj) => {},
   };
 }
 
@@ -34,19 +36,19 @@ export function BadgeContextProvider(props) {
   const [state, dispatch] = useReducer(reducer, true, init);
 
   function globalUpdateHandler(obj) {
-    dispatch({ type: "global", payload: { global: obj } });
+    dispatch({ type: "global", payload: { globalBadges: obj } });
   }
 
   function channelUpdateHandler(obj) {
-    dispatch({ type: "channel", payload: { channel: obj } });
+    dispatch({ type: "channel", payload: { channelBadges: obj } });
   }
 
   const context = {
-    resetKey: state.resetKey,
-    global: state.global,
-    channel: state.channel,
-    setGlobal: globalUpdateHandler,
-    setChannel: channelUpdateHandler,
+    badgeResetKey: state.badgeResetKey,
+    globalBadges: state.globalBadges,
+    channelBadges: state.channelBadges,
+    setGlobalBadges: globalUpdateHandler,
+    setChannelBadges: channelUpdateHandler,
   };
   return (
     <BadgeContext.Provider value={context}>
@@ -55,4 +57,6 @@ export function BadgeContextProvider(props) {
   );
 }
 
-export default BadgeContext;
+export default function useBadges() {
+  return useContext(BadgeContext);
+}

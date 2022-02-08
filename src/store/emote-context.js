@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -12,19 +12,21 @@ function reducer(state, action) {
 
 function rebuild(state) {
   return {
-    resetKey: state.resetKey,
-    global: state.global,
-    channel: state.channel,
+    emoteResetKey: state.emoteResetKey,
+    globalEmotes: state.globalEmotes,
+    channelEmotes: state.channelEmotes,
+    setGlobalEmotes: state.setGlobalEmotes,
+    setChannelEmotes: state.setChannelEmotes,
   };
 }
 
-function init(resetKey) {
+function init(emoteResetKey) {
   return {
-    resetKey,
-    global: undefined,
-    channel: undefined,
-    setGlobal: (newObj) => {},
-    setChannel: (newObj) => {},
+    emoteResetKey,
+    globalEmotes: undefined,
+    channelEmotes: undefined,
+    setGlobalEmotes: (newObj) => {},
+    setChannelEmotes: (newObj) => {},
   };
 }
 
@@ -34,19 +36,19 @@ export function EmoteContextProvider(props) {
   const [state, dispatch] = useReducer(reducer, true, init);
 
   function globalUpdateHandler(obj) {
-    dispatch({ type: "global", payload: { global: obj } });
+    dispatch({ type: "global", payload: { globalEmotes: obj } });
   }
 
   function channelUpdateHandler(obj) {
-    dispatch({ type: "channel", payload: { channel: obj } });
+    dispatch({ type: "channel", payload: { channelEmotes: obj } });
   }
 
   const context = {
-    resetKey: state.resetKey,
-    global: state.global,
-    channel: state.channel,
-    setGlobal: globalUpdateHandler,
-    setChannel: channelUpdateHandler,
+    emoteResetKey: state.emoteResetKey,
+    globalEmotes: state.globalEmotes,
+    channelEmotes: state.channelEmotes,
+    setGlobalEmotes: globalUpdateHandler,
+    setChannelEmotes: channelUpdateHandler,
   };
   return (
     <EmoteContext.Provider value={context}>
@@ -55,4 +57,6 @@ export function EmoteContextProvider(props) {
   );
 }
 
-export default EmoteContext;
+export default function useEmotes() {
+  return useContext(EmoteContext);
+}
