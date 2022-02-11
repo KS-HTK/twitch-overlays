@@ -30,17 +30,32 @@ function init(badgeResetKey) {
   };
 }
 
+const toKVobj = (arr) => {
+  return Object.fromEntries(
+    arr.map(({ set_id, versions }) => {
+      return [
+        set_id,
+        Object.fromEntries(
+          versions.map((ver) => {
+            return [ver.id, ver];
+          })
+        ),
+      ];
+    })
+  );
+};
+
 const BadgeContext = createContext(init(true));
 
 export function BadgeContextProvider(props) {
   const [state, dispatch] = useReducer(reducer, true, init);
 
   function globalUpdateHandler(obj) {
-    dispatch({ type: "global", payload: { globalBadges: obj } });
+    dispatch({ type: "global", payload: { globalBadges: toKVobj(obj) } });
   }
 
   function channelUpdateHandler(obj) {
-    dispatch({ type: "channel", payload: { channelBadges: obj } });
+    dispatch({ type: "channel", payload: { channelBadges: toKVobj(obj) } });
   }
 
   const context = {

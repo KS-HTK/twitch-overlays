@@ -73,9 +73,7 @@ export function LoginPage() {
 
   window.setToken = (hash) => {
     if (hash.token_type !== "bearer") return null;
-    auth.setToken(hash.access_token, () => {
-      navigate(from, { replace: true });
-    });
+    auth.setToken(hash.access_token);
   };
 
   return (
