@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import AlertBox from "./alertBox/AlertBox";
-import { LoginPage, AuthPage, AuthStatus, RequireAuth } from "./Auth";
+import { LoginPage, AuthPage, RequireAuth } from "./Auth";
 import { AuthContextProvider } from "./store/auth-context";
 import Chat from "./chat/Chat";
 import Config from "./config/Config";
@@ -57,7 +57,6 @@ ReactDOM.render(
 function Layout() {
   return (
     <>
-      <AuthStatus />
       <Outlet />
     </>
   );

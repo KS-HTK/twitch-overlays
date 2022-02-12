@@ -6,7 +6,7 @@ function Badge({ imgUrl }) {
 
 //generate badge img tags for message
 export default function Badges({ badges }) {
-  const { globalBadges, channelBadges, badgeResetKey } = useBadges();
+  const { globalBadges, channelBadges } = useBadges();
 
   let badgeComponents = [];
 

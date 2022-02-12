@@ -1,5 +1,13 @@
 import { createContext, useContext, useReducer } from "react";
 
+const toKVobj = (arr) => {
+  return Object.fromEntries(
+    arr.map((emoteInfo) => {
+      return [emoteInfo.id, emoteInfo];
+    })
+  );
+};
+
 function reducer(state, action) {
   switch (action.type) {
     case "global":
@@ -36,11 +44,11 @@ export function EmoteContextProvider(props) {
   const [state, dispatch] = useReducer(reducer, true, init);
 
   function globalUpdateHandler(obj) {
-    dispatch({ type: "global", payload: { globalEmotes: obj } });
+    dispatch({ type: "global", payload: { globalEmotes: toKVobj(obj) } });
   }
 
   function channelUpdateHandler(obj) {
-    dispatch({ type: "channel", payload: { channelEmotes: obj } });
+    dispatch({ type: "channel", payload: { channelEmotes: toKVobj(obj) } });
   }
 
   const context = {
