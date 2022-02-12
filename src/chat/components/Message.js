@@ -1,3 +1,4 @@
+import React from 'react';
 import Badges from "./Badge";
 
 export default function Message(props) {

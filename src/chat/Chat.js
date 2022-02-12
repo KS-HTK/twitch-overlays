@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef } from "react";
-import { ApiRequest } from "../services/Twitch";
+import React, { useEffect, useState, useRef } from "react";
+import { apiRequest } from "../services/Twitch";
 import useAuth from "../store/auth-context";
 import useBadges from "../store/badge-context";
 import Message from "./components/Message";
@@ -38,12 +38,12 @@ export default function Chat() {
     setBroadcaster(obj[0]);
   };
   useEffect(() => {
-    ApiRequest(token, "users", setInfo, { login: userName });
+    apiRequest(token, "users", setInfo, { login: userName });
   }, [token]);
   useEffect(() => {
     if (!broadcaster) return;
-    ApiRequest(token, "chat/badges/global", setGlobalBadges);
-    ApiRequest(token, "chat/badges", setChannelBadges, {
+    apiRequest(token, "chat/badges/global", setGlobalBadges);
+    apiRequest(token, "chat/badges", setChannelBadges, {
       broadcaster_id: broadcaster.id,
     });
   }, [badgeResetKey, broadcaster, token]);

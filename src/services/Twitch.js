@@ -14,7 +14,7 @@ export const loginUrl =
   "&scope=" +
   scope;
 
-export function ApiRequest(
+export function apiRequest(
   token,
   endpoint,
   callback = (res) => {},
@@ -52,5 +52,4 @@ export function ApiRequest(
       console.warn("API request to " + endpoint + " failed:\n" + reason);
     }
   );
-  return null;
 }

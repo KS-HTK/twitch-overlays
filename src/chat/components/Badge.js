@@ -1,3 +1,4 @@
+import React from 'react';
 import useBadges from "../../store/badge-context";
 
 function Badge({ imgUrl }) {
