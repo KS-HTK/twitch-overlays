@@ -16,7 +16,7 @@ This Project aims to be capable of running without a Server.
 Ofcourse the final build could be hosted (and probably will be on github.io) but all functionality will
 be running on the client. The Server will never recive any information except the initial request.
 This project is a Single-Page-App using the React framework.
-It uses Twitchs OAuth implicit Code flow for Authentication.
+It uses OAuth2 implicit Code flow for Authentication with Twitch as Auth-service Provider.
 
 ## State
 
@@ -26,7 +26,9 @@ This design requires the OpticalA font from Brøderbund.
 
 But the ./src/css/index.css and ./src/css/Chat.css can be edited to create any design you desire.
 
-To use the overlay currently requires yarn or npm.
-I use yarn.
+To use the overlay currently requires npm to build it yourself.
+`npm install` to install the dependencies
+`npm start` to start the development server
+`npm build` to build the app
 
 I do not recommend running the overlay in development mode as it is not optimized.
