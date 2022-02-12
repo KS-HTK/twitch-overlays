@@ -1,15 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
-import "./index.css";
 import App from "./App";
 import AlertBox from "./alertBox/AlertBox";
 import { LoginPage, AuthPage, RequireAuth } from "./Auth";
-import { AuthContextProvider } from "./store/auth-context";
 import Chat from "./chat/Chat";
 import Config from "./config/Config";
+import { AuthContextProvider } from "./store/auth-context";
 import { BadgeContextProvider } from "./store/badge-context";
-import { EmoteContextProvider } from "./store/emote-context";
+import "./css/index.css";
 
 ReactDOM.render(
   <AuthContextProvider>
@@ -32,9 +31,7 @@ ReactDOM.render(
             element={
               <RequireAuth>
                 <BadgeContextProvider>
-                  <EmoteContextProvider>
-                    <Chat />
-                  </EmoteContextProvider>
+                  <Chat />
                 </BadgeContextProvider>
               </RequireAuth>
             }

@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, useLocation, Navigate } from "react-router-dom";
 import useAuth from "./store/auth-context";
 import { loginUrl } from "./services/Twitch";
-import "./Auth.css";
+import "./css/Auth.css";
 
 export function AuthStatus() {
   let auth = useAuth();

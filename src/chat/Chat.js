@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 import { ApiRequest } from "../services/Twitch";
 import useAuth from "../store/auth-context";
 import useBadges from "../store/badge-context";
-//import useEmotes from "../store/emote-context";
 import Message from "./components/Message";
 import "../css/Chat.css";
 
@@ -13,7 +12,6 @@ const userName = process.env.REACT_APP_USER_NAME;
 export default function Chat() {
   const { token } = useAuth();
   const { setGlobalBadges, setChannelBadges, badgeResetKey } = useBadges();
-  //const { setGlobalEmotes, setChannelEmotes, emoteResetKey } = useEmotes();
   const [broadcaster, setBroadcaster] = useState(undefined);
   const tmi = useRef();
   const messages = useRef([]);
@@ -49,13 +47,6 @@ export default function Chat() {
       broadcaster_id: broadcaster.id,
     });
   }, [badgeResetKey, broadcaster, token]);
-  /*useEffect(() => {
-    if (!broadcaster) return;
-    ApiRequest(token, "chat/emotes/global", setGlobalEmotes);
-    ApiRequest(token, "chat/emotes", setChannelEmotes, {
-      broadcaster_id: broadcaster.id,
-    });
-  }, [emoteResetKey, broadcaster]);*/
   useEffect(() => {
     tmi.current.on("message", (channel, tags, message, self) => {
       const id = tags["id"];
