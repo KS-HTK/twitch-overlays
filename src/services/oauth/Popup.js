@@ -27,7 +27,6 @@ export default function Popup(props) {
         })
         .join(",")
     );
-    console.log("Popup should have opend.");
 
     if (props.popupUrl === "about:blank") {
       popup.document.body.innerHTML = "Loading...";
