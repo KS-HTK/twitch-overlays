@@ -1,6 +1,6 @@
 const apiUrl = process.env.REACT_APP_API_URL;
 const authUrl = process.env.REACT_APP_AUTH_URL;
-const redirectUrl = process.env.REACT_APP_REDIRECT_URI;
+const redirectUri = process.env.REACT_APP_REDIRECT_URI;
 const clientId = process.env.REACT_APP_CLIENT_ID;
 
 const scope = "chat:read";
@@ -8,7 +8,7 @@ const scope = "chat:read";
 export const loginUrl =
   authUrl +
   "?redirect_uri=" +
-  redirectUrl +
+  redirectUri +
   "&response_type=token&client_id=" +
   clientId +
   "&scope=" +

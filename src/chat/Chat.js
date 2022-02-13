@@ -19,7 +19,7 @@ export default function Chat() {
 
   useEffect(() => {
     tmi.current = new tmijs.Client({
-      options: { debug: true, skipUpdatingEmotesets: true },
+      options: { debug: false, skipUpdatingEmotesets: true },
       identity: {
         username: userName,
         password: `oauth:${token}`,

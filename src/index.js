@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import App from "./App";
 import AlertBox from "./alertBox/AlertBox";
-import { LoginPage, AuthPage, RequireAuth } from "./Auth";
+import { LoginPage, AuthPage, RequireAuth } from "./Login";
 import Chat from "./chat/Chat";
 import Config from "./config/Config";
 import { AuthContextProvider } from "./store/auth-context";

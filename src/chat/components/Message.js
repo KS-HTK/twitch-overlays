@@ -3,7 +3,6 @@ import Badges from "./Badge";
 
 export default function Message(props) {
   //props include channel, tags, msg, self
-  console.log("Recived Message: ", props.msg);
 
   //get time of message as 'hh:mm' format
   const time = new Date(parseInt(props.tags["tmi-sent-ts"])).toLocaleTimeString(
@@ -18,7 +17,6 @@ export default function Message(props) {
   const color = props.tags["color"];
   //get emotes:
   const emotes = props.tags["emotes"];
-  console.log(emotes);
   let printMsg;
   if (emotes !== null && emotes.length !== 0) {
     let newMsg = [];

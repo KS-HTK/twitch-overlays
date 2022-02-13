@@ -32,3 +32,11 @@ To use the overlay currently requires npm to build it yourself.
 `npm build` to build the app
 
 I do not recommend running the overlay in development mode as it is not optimized.
+
+# Attribution
+
+This project would not be possible without these projects from the open-source community
+- (react)[https://reactjs.org/]
+- (create-react-app)[https://create-react-app.dev/]
+- (react-router-dom)[https://reactrouter.com/]
+- (react-oauth)[https://github.com/conscia/react-oauth]
